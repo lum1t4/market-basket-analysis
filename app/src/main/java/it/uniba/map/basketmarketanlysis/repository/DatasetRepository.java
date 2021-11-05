@@ -31,15 +31,14 @@ public class DatasetRepository {
     private final TaskRunner runner = new TaskRunner(AppDatabase.getDatabaseThreadExecutor());
 
 
-    private DatasetRepository(Context context) {
-        AppDatabase database = AppDatabase.getInstance(context);
-        datasetDAO = database.datasetDAO();
-        basketDAO = database.basketDAO();
+    private DatasetRepository(DatasetDAO dDAO, BasketDAO bDAO) {
+        datasetDAO = dDAO;
+        basketDAO = bDAO;
     }
 
-    public static DatasetRepository getInstance(Context context) {
+    public static DatasetRepository getInstance(DatasetDAO dDAO, BasketDAO bDAO) {
         if (instance == null) {
-            instance = new DatasetRepository(context);
+            instance = new DatasetRepository(dDAO, bDAO);
         }
         return instance;
     }

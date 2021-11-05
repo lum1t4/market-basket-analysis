@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import it.uniba.map.basketmarketanlysis.MarketBasketAnalysis;
 import it.uniba.map.basketmarketanlysis.R;
 import it.uniba.map.basketmarketanlysis.model.data.Dataset;
 import it.uniba.map.basketmarketanlysis.repository.DatasetRepository;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        DatasetRepository repository = DatasetRepository.getInstance(getApplicationContext());
+        DatasetRepository repository = MarketBasketAnalysis.getDatasetRepository();
 
         repository.getDatasets().observe(this, new Observer<List<Dataset>>() {
             @Override
