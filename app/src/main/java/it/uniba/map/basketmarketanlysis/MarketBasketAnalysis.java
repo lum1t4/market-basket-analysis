@@ -21,7 +21,7 @@ public class MarketBasketAnalysis extends Application {
         datasetRepository = DatasetRepository.getInstance(datasetDAO, basketDAO);
     }
 
-    public static synchronized DatasetRepository getDatasetRepository() {
+    public static DatasetRepository getDatasetRepository() {
         return datasetRepository;
     }
 }
