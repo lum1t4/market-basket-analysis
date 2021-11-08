@@ -21,6 +21,10 @@ public class ContinuousAttribute extends Attribute implements Iterable<Float> {
         return min;
     }
 
+    /**
+     * Restituisce l'iteratore
+     * @return
+     */
     @Override
     public Iterator<Float> iterator() {
         return new ContinuousAttributeIterator(min, max, 5);

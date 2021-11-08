@@ -22,5 +22,4 @@ public class EmergingPattern extends FrequentPattern implements Serializable {
         return super.toString() + "[" + growRate + "]";
     }
 
-
 }

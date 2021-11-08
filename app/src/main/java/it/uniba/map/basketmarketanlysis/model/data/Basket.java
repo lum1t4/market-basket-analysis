@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+
+/**
+ * Basket rappresenta una riga nel db
+ * un pattern
+ */
 @Entity(tableName = "baskets")
 public class Basket implements Serializable {
 

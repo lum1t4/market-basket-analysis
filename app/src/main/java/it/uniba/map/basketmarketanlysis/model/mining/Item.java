@@ -5,6 +5,7 @@ import java.io.Serializable;
 import it.uniba.map.basketmarketanlysis.model.data.Attribute;
 
 public abstract class Item implements Serializable {
+
     protected Attribute attribute;
     protected Object value;
 

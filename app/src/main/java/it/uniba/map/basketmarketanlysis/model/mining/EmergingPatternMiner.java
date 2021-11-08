@@ -64,10 +64,5 @@ public class EmergingPatternMiner implements Iterable<EmergingPattern>, Serializ
         epList.sort(new ComparatorGrowRate());
     }
 
-    public void salva(String nomeFile) throws IOException {
-        FileOutputStream file = new FileOutputStream(nomeFile);
-        ObjectOutputStream outputStream = new ObjectOutputStream(file);
-        outputStream.writeObject(this);
-    }
 
 }

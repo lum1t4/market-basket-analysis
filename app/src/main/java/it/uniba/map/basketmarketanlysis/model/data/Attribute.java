@@ -3,7 +3,7 @@ package it.uniba.map.basketmarketanlysis.model.data;
 import java.io.Serializable;
 
 /**
- * <code>{@code Attribute} is a class</code>
+ * <code>{@code Attribute} rappresenta la colonna/categoria in cui ricadono gli item</code>
  */
 public abstract class Attribute implements Serializable {
 

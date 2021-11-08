@@ -3,6 +3,8 @@ package it.uniba.map.basketmarketanlysis.model;
 
 import androidx.annotation.NonNull;
 
+import org.w3c.dom.Attr;
+
 import java.util.List;
 
 import it.uniba.map.basketmarketanlysis.model.data.Attribute;
@@ -13,7 +15,6 @@ public class Data {
 
     private final Object[][] data;
     private final int numberOfExamples;
-
     private final List<Attribute> attributeSet;
 
 

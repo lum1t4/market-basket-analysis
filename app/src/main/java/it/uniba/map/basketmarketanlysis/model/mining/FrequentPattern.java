@@ -1,5 +1,7 @@
 package it.uniba.map.basketmarketanlysis.model.mining;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,53 +16,75 @@ public class FrequentPattern implements Comparable<FrequentPattern>, Iterable<It
     private float support;
 
 
-    FrequentPattern() {
+    public FrequentPattern() {
         fp = new LinkedList<>();
     }
 
-    // costruttore per copia
-    FrequentPattern(FrequentPattern pattern) {
+    /**
+     *  Costruttore per copia: crea un nuovo frequent pattern a partire da un altro.
+     * @param pattern frequent pattern to copy
+     */
+    public FrequentPattern(FrequentPattern pattern) {
         fp = new LinkedList<>();
         fp.addAll(pattern.fp);
         support = pattern.support;
     }
 
-    // aggiunge un nuovo item al pattern
-    void addItem(Item item) {
+    /**
+     * Aggiunge un nuovo item al pattern
+     * @param item item da aggingere al frequent pattern
+     */
+    public void addItem(Item item) {
         fp.add(item);
     }
 
-    Item getItem(int index) {
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public Item getItem(int index) {
         return fp.get(index);
     }
 
     /**
+     * Restituisce il support del fp
      * @return support
      */
     public float getSupport() {
         return support;
     }
 
+    /**
+     * Assegna una support rate al frequent pattern
+     * @param support
+     */
     public void setSupport(float support) {
         this.support = support;
     }
 
+    /**
+     * @return Frequent Pattern number of items
+     */
     public int getPatternLength() {
         return fp.size();
     }
 
+    @NonNull
     public String toString() {
         StringBuilder builder = new StringBuilder();
-
         Item last = fp.removeLast();
         fp.forEach(i -> builder.append(String.format("(%s) AND ", i)));
         fp.add(last);
         builder.append(String.format("(%s) [%s]", last, support));
-
         return builder.toString();
     }
 
-    // Aggiorna il supporto
+    /**
+     * Calcola il support del frequent pattern
+     * @param data Data table
+     * @return support
+     */
     public float computeSupport(Data data) {
         int suppCount = 0;
         // indice esempio

@@ -30,12 +30,26 @@ public class DatasetRepository {
     private final BasketDAO basketDAO;
     private final TaskRunner runner = new TaskRunner(AppDatabase.getDatabaseThreadExecutor());
 
-
+    /**
+     * Costruttore privato
+     * @param dDAO datasetDao implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari con il db
+     * @param bDAO basketDao implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari con il db
+     */
     private DatasetRepository(DatasetDAO dDAO, BasketDAO bDAO) {
         datasetDAO = dDAO;
         basketDAO = bDAO;
     }
 
+    /**
+     * Restituisce l'unica istanza di DatasetRepository (Singleton Pattern)
+     * @param dDAO datasetDao implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari con il db
+     * @param bDAO basketDao implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari con il db
+     * @return datasetRepository
+     */
     public static DatasetRepository getInstance(DatasetDAO dDAO, BasketDAO bDAO) {
         if (instance == null) {
             instance = new DatasetRepository(dDAO, bDAO);
@@ -43,6 +57,10 @@ public class DatasetRepository {
         return instance;
     }
 
+    /**
+     * Inserisce un nuovo dataset nel db
+     * @param dataset
+     */
     public void insertDataset(Dataset dataset) {
         runner.executeAsync(
                 () -> {
@@ -52,6 +70,10 @@ public class DatasetRepository {
         );
     }
 
+    /**
+     * Aggiorna i valori di un dataset nel db
+     * @param dataset
+     */
     public void updateDataset(Dataset dataset) {
         runner.executeAsync(
                 () -> {
@@ -61,42 +83,71 @@ public class DatasetRepository {
         );
     }
 
+    /**
+     * Elimina un dataset dal database
+     * @param dataset
+     */
     public void deleteDataset(Dataset dataset) {
-
         basketDAO.deleteBaskets(dataset.getBaskets());
         datasetDAO.deleteDataset(dataset);
     }
 
+    /**
+     * Restituisce un dataset effettuando una query con l'indentificatore
+     * del dataset
+     * @param id identificatore del dataset
+     * @return dataset
+     */
     public Dataset getDataset(long id) {
         Dataset dataset = datasetDAO.getDataset(id);
         dataset.setBaskets(basketDAO.getBasketsByDataset(id));
         return dataset;
     }
 
+    /**
+     * Restituisce un dataset effettuando una query con il nome del
+     * dataset
+     * @param label nome del dataset
+     * @return dataset
+     */
     public Dataset getDataset(String label) {
         Dataset dataset = datasetDAO.getDataset(label);
         dataset.setBaskets(basketDAO.getBasketsByDataset(dataset.getId()));
         return dataset;
     }
 
+    /**
+     * Restiutuisce un contenitore osservabile utile e in un thread separato legge i dataset dal
+     * database e nel completa il caricamento con <code>{@code lazyLoadDataset}</code>
+     * @return liveDataDatasets <code>{@code LiveData<List<Dataset>>}</code> contenitore osservabile
+     */
     public LiveData<List<Dataset>> getDatasets() {
-        MutableLiveData<List<Dataset>> dataset = new MutableLiveData<>();
+        MutableLiveData<List<Dataset>> liveDataDatasets = new MutableLiveData<>();
         runner.executeAsync(
                 () -> {
                     List<Dataset> retrieved = datasetDAO.getDatasets();
                     retrieved.forEach(this::lazyLoadDataset);
-                    dataset.postValue(retrieved);
+                    liveDataDatasets.postValue(retrieved);
                 }
         );
-        return dataset;
+        return liveDataDatasets;
     }
 
+    /**
+     * Completa i campi del dataset che non sono immediatamente
+     * disponibili dalla rappresentazione nel database
+     * @param dataset
+     */
     private void lazyLoadDataset(Dataset dataset) {
         dataset.setBaskets(basketDAO.getBasketsByDataset(dataset.getId()));
         dataset.setAttributes(getAttributes(dataset));
     }
 
-
+    /**
+     * Restituisce una lista di atttributi di un dataset
+     * @param dataset
+     * @return
+     */
     private List<Attribute> getAttributes(Dataset dataset) {
         List<Attribute> attributes = new ArrayList<>();
         long datasetId = dataset.getId();

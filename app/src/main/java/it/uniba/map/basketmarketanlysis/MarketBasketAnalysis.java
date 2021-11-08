@@ -7,9 +7,14 @@ import it.uniba.map.basketmarketanlysis.database.BasketDAO;
 import it.uniba.map.basketmarketanlysis.database.DatasetDAO;
 import it.uniba.map.basketmarketanlysis.repository.DatasetRepository;
 
+/**
+ * <code>{@code Application}</code> è la classe che viene eseguita per prima all'avvio della applicazione.
+ * E' possibile, come in questo caso, specificare una classe derivata per aggiungere valori
+ *
+ */
 public class MarketBasketAnalysis extends Application {
     private static DatasetRepository datasetRepository;
-    public static final String APP_DATABASE_NAME = "basket_market_analysis_database";
+    public static final String APP_DATABASE_NAME = "market_basket_analysis_database";
 
     @Override
     public void onCreate() {

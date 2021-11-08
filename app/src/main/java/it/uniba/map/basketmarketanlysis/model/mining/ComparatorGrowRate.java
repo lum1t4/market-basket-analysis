@@ -9,8 +9,4 @@ public class ComparatorGrowRate implements Comparator<EmergingPattern> {
         return Float.compare(o1.getGrowRate(), o2.getGrowRate());
     }
 
-//    @Override
-//    public Comparator<EmergingPattern> thenComparing(Comparator<? super EmergingPattern> other) {
-//        return Comparator.super.thenComparing(other);
-//    }
 }
