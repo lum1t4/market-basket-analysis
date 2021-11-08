@@ -50,7 +50,7 @@ public class DatasetRepository {
      *             che permette di astrarre le operazioni più elementari con il db
      * @return datasetRepository
      */
-    public static DatasetRepository getInstance(DatasetDAO dDAO, BasketDAO bDAO) {
+    public static synchronized DatasetRepository getInstance(DatasetDAO dDAO, BasketDAO bDAO) {
         if (instance == null) {
             instance = new DatasetRepository(dDAO, bDAO);
         }
