@@ -21,7 +21,7 @@ public class ContinuousAttribute extends Attribute implements Iterable<Float> {
     }
 
     /**
-     * @return max massimo tra i valori dell'attributo
+     * @return massimo tra i valori dell'attributo
      */
     public float getMax() {
         return max;

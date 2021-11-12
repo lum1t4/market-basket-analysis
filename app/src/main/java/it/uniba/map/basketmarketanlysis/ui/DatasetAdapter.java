@@ -17,19 +17,33 @@ import java.util.stream.Collectors;
 import it.uniba.map.basketmarketanlysis.R;
 import it.uniba.map.basketmarketanlysis.model.data.Dataset;
 
+/**
+ * Renderizza la grafica della lista di dataset e gestisce gli eventi collegati ad essa
+ */
 public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHolder> {
 
     private final int MAX_SELECTABLE = 2;
     private final List<DataBinding> source;
     private final List<Dataset> datasets = new ArrayList<>(MAX_SELECTABLE);
 
-
+    /**
+     * Costruttore
+     * @param datasets lista dei dataset da visuallizzare
+     */
     DatasetAdapter(List<Dataset> datasets) {
         source = datasets.stream()
                 .map(DataBinding::new)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Crea una view dal layout xml <code>dataset_item.xml</code> e la passa in
+     * input al costruttore di ViewHolder
+     * @param parent la ViewGroup nel quale la nuova View sarà aggiunta dopo che è
+     *               assegnata una posizione a qquest'ultima
+     * @param viewType il tip di view della nuova View
+     * @return ViewHolder che detiene e gestice una view
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,6 +54,12 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    /**
+     * Passa i dati dell'elemento in posizione <code>position</code> e li passa al holder
+     * della View nel quale si vogliono far comparire i dati
+     * @param holder il contenitore della view
+     * @param position posizione dell'elemento
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
@@ -57,11 +77,18 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
 
     }
 
+    /**
+     * @return Il numero di elementi da rappresentare
+     */
     @Override
     public int getItemCount() {
         return source.size();
     }
 
+    /**
+     * Classe che aggiunge due campi al dato per memorizzare se l'elemento è stato selezionato
+     * nell'interfaccia e se si visualizzano i dettagli
+     */
     private class DataBinding {
 
         private final Dataset dataset;
@@ -74,18 +101,33 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
             this.selected = false;
         }
 
+        /**
+         * Nega il campo <code>{@code expanded}</code>
+         */
         public void switchExpansion() {
             expanded = !expanded;
         }
 
+        /**
+         * @return true se si stanno mostrando i dettagli, false altrimenti
+         */
         public boolean isExpanded() {
             return expanded;
         }
 
+        /**
+         * @return true se l'elemento è selezionato, false altrimenti
+         */
         public boolean isSelected() {
             return selected;
         }
 
+        /**
+         * Se l'elemento è già presente nella lista dei selezionati lo rimuove
+         * altrimenti aggiunge alla lista l'elemento.
+         * In entrambi i casi cambia il valore del campo <code>{@code selected}</code> effettuanto
+         * la negozione con il valore precedente
+         */
         public void switchSelection() {
             if (selected) {
                 datasets.remove(dataset);
@@ -95,6 +137,9 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
             selected = !selected;
         }
 
+        /**
+         * @return dataset contenuto in questo wrapper
+         */
         public Dataset getDataset() {
             return dataset;
         }
@@ -109,7 +154,10 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
         public final TextView content;
         public final View root;
 
-
+        /**
+         * Contiene una view e ne gestisce il comportamento
+         * @param view view da gestire
+         */
         public ViewHolder(View view) {
             super(view);
             root = view;
@@ -164,22 +212,39 @@ public class DatasetAdapter extends RecyclerView.Adapter<DatasetAdapter.ViewHold
 
         }
 
+        /**
+         * @return view nella quale far comparire il titolo del dataset
+         */
         public TextView getTitleView() {
             return title;
         }
 
+
+        /**
+         * @return view nella quale far comparire il numero di basket del dataset
+         */
         public TextView getNumberOfBasketsView() {
             return noOfBaskets;
         }
 
+        /**
+         * @return view nella quale far comparire una stringa descrittiva dei basket contenuti
+         * nel dataset
+         */
         public TextView getContentView() {
             return content;
         }
 
+        /**
+         * @return view della spunta di selezione
+         */
         public View getCheckView() {
             return check;
         }
 
+        /**
+         * @return view che conterrà la textview della descrizione del dataset {@link #getContentView()}
+         */
         public View getContentWrapperView() {
             return contentWrapper;
         }

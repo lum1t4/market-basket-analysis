@@ -9,8 +9,8 @@ import java.io.Serializable;
 
 
 /**
- * Basket rappresenta una riga nel db
- * un pattern
+ * Basket rappresenta una riga nel db,
+ * un rilevamento/pattern atomico
  */
 @Entity(tableName = "baskets")
 public class Basket implements Serializable {
@@ -44,13 +44,21 @@ public class Basket implements Serializable {
         this.dataset = datasetId;
     }
 
+    /**
+     * @return identificatore del basket
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Imposta l'identificatore
+     * @param id nuovo identificatore
+     */
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getOutlook() {
         return outlook;

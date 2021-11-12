@@ -41,6 +41,10 @@ public class AnalysisViewModel extends AndroidViewModel {
         this.background = background;
     }
 
+    /**
+     * @return restituisce una contenitore osservabile e consapevole il ciclo di vita
+     * dell'activity nella quale aggiorneremo il risultato della analisi
+     */
     public LiveData<AnalysisResult> getAnalysisResult() {
         return observableContainer;
     }
@@ -48,11 +52,11 @@ public class AnalysisViewModel extends AndroidViewModel {
     /**
      * Metodo che controlla se il valore del support rate è corretto
      *
-     * @param supportRate float
+     * @param supportRate supporto minimo
      * @return <code>true</code> se il support rate è compreso tra 0 e 1, <code>false</code> altrimenti
      */
     public boolean isValidSupportRate(float supportRate) {
-        return supportRate >= 0 && supportRate <= 1;
+        return supportRate > 0 && supportRate <= 1;
     }
 
     /**
@@ -65,6 +69,13 @@ public class AnalysisViewModel extends AndroidViewModel {
         return growRate >= 0;
     }
 
+
+    /**
+     * Effettua il calcolo oppure recupera da file una analisi già effettuata (cache)
+     * aggiornando il valore del contenitore osservabile con un risultato (<code>{@code AnalysisResult}</code>)
+     * @param supportRate supporto minimo
+     * @param growRate creascita minima
+     */
     public void retrieveAnalysis(float supportRate, float growRate) {
 
         if (!isValidSupportRate(supportRate)) {
@@ -91,6 +102,15 @@ public class AnalysisViewModel extends AndroidViewModel {
 
     }
 
+    /**
+     * Legge dalla memoria secondaria una analisi già effettuato e salvata
+     * @param supportRate supporto minimo
+     * @param growRate crescita minima
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private AnalysisResult loadAnalysis(float supportRate, float growRate)
             throws FileNotFoundException, IOException, ClassNotFoundException {
         Context context = getApplication().getApplicationContext();
@@ -125,6 +145,15 @@ public class AnalysisViewModel extends AndroidViewModel {
 
     }
 
+
+    /**
+     * Effettua il calcolo sui dataset target e background e restituisce un risultato
+     * @param supportRate supporto minimo
+     * @param growRate creascita minima
+     * @return analysisResult contiene, se l'analisi è stata effettuato correttamente, la coppia
+     * (fpMiner, epMiner) oppure l'identificatore (un intero) di un risorsa di testo
+     * che descrive l'errore durante l'analisi
+     */
     private AnalysisResult computeAnalysis(float supportRate, float growRate) {
         Data dataTarget = new Data(target);
         Data dataBackground = new Data(background);
@@ -151,6 +180,14 @@ public class AnalysisViewModel extends AndroidViewModel {
 
     }
 
+
+    /**
+     * Salva una analisi sulla memoria secondaria
+     * @param FPMiner insieme dei pattern frequenti
+     * @param EPMiner insieme dei pattern emergenti
+     * @param supportRate supporto minimo
+     * @param growRate crescita minima
+     */
     private void saveAnalysis(FrequentPatternMiner FPMiner, EmergingPatternMiner EPMiner, float supportRate, float growRate) {
         Context context = getApplication().getApplicationContext();
         Pair<FrequentPatternMiner, EmergingPatternMiner> pair;

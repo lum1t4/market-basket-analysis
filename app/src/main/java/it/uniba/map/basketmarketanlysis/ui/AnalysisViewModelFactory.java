@@ -30,6 +30,11 @@ public class AnalysisViewModelFactory extends ViewModelProvider.AndroidViewModel
         this.background = background;
     }
 
+
+    /**
+     * Istanzia un oggetto di tipo AnalysisViewModel
+     * @return view model per analysis activity
+     */
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

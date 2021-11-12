@@ -15,9 +15,9 @@ import it.uniba.map.basketmarketanlysis.model.data.Basket;
 import it.uniba.map.basketmarketanlysis.model.data.Dataset;
 
 /**
- * La classe <code>AppDatabase</code> che usa il design pattern del
- * Sigleton crea una istanza SQLite e detiene tutti i DAO (Data Access Object),
- * la cui implementazione è fornita al momento della compilazione della libreria Room
+ * La classe <code>AppDatabase</code>, sulla quale viene applicato il design pattern del
+ * Sigleton, crea una istanza SQLite e detiene tutti i DAO (Data Access Object),
+ * la cui implementazione è fornita al momento della compilazione grazie alla libreria Room
  */
 @Database(entities = {Basket.class, Dataset.class}, version = 1, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {

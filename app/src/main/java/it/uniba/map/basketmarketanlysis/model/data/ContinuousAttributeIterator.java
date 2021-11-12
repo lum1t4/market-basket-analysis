@@ -2,6 +2,11 @@ package it.uniba.map.basketmarketanlysis.model.data;
 
 import java.util.Iterator;
 
+
+/**
+ * Iteratore che implementa l'algoritmo di discretizzazione
+ * di un intervallo
+ */
 public class ContinuousAttributeIterator implements Iterator<Float> {
 
     private final float min;

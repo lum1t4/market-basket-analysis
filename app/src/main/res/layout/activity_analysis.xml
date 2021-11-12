@@ -65,7 +65,8 @@
                         android:id="@+id/computeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/compute" />
+                        android:text="@string/compute"
+                        android:enabled="false"/>
 
                 </LinearLayout>
 

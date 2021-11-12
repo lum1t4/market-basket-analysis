@@ -8,6 +8,11 @@ public class ContinuousItem extends Item {
         super(attribute, value);
     }
 
+    /**
+     * @param value un numero reale
+     * @return true se value è compreso nell'intervallo dell'item,
+     * false altrimenti
+     */
     @Override
     boolean checkItemCondition(Object value) {
 

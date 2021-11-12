@@ -21,7 +21,8 @@ import it.uniba.map.basketmarketanlysis.utility.TaskRunner;
  * Le classi Repository secondo il pattern MVVC sviluppano
  * la business logic, gestiscono le operazioni CRUD attraverso i DAO
  * (Data Access Object) da diverse sorgenti (remoto, database locale, cache...)
- * astraendo cosi l'accesso all'informazione da diverse fonti.
+ * astraendo cosi l'accesso all'informazione da diverse fonti. La documentazione ufficiale
+ * afferma che queste debbano essere SSOT (single source of truth).
  */
 public class DatasetRepository {
 
@@ -31,11 +32,11 @@ public class DatasetRepository {
     private final TaskRunner runner = new TaskRunner(AppDatabase.getDatabaseThreadExecutor());
 
     /**
-     * Costruttore privato
-     * @param dDAO datasetDao implementazione dell'interfaccia DatasetDAO
-     *             che permette di astrarre le operazioni più elementari con il db
-     * @param bDAO basketDao implementazione dell'interfaccia DatasetDAO
-     *             che permette di astrarre le operazioni più elementari con il db
+     * Costruttore privato per impedire che siano instaziabili più oggetti di questa classe
+     * @param dDAO implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari del tipo dataset con il db
+     * @param bDAO implementazione dell'interfaccia DatasetDAO
+     *             che permette di astrarre le operazioni più elementari del tipo basket con il db
      */
     private DatasetRepository(DatasetDAO dDAO, BasketDAO bDAO) {
         datasetDAO = dDAO;
@@ -43,12 +44,9 @@ public class DatasetRepository {
     }
 
     /**
-     * Restituisce l'unica istanza di DatasetRepository (Singleton Pattern)
-     * @param dDAO datasetDao implementazione dell'interfaccia DatasetDAO
-     *             che permette di astrarre le operazioni più elementari con il db
-     * @param bDAO basketDao implementazione dell'interfaccia DatasetDAO
-     *             che permette di astrarre le operazioni più elementari con il db
-     * @return datasetRepository
+     * @param dDAO data access object per l'entity dataset
+     * @param bDAO data access object per l'entity basket
+     * @return l'unica istanza di DatasetRepository
      */
     public static synchronized DatasetRepository getInstance(DatasetDAO dDAO, BasketDAO bDAO) {
         if (instance == null) {
@@ -59,7 +57,7 @@ public class DatasetRepository {
 
     /**
      * Inserisce un nuovo dataset nel db
-     * @param dataset
+     * @param dataset da aggiungere nel db
      */
     public void insertDataset(Dataset dataset) {
         runner.executeAsync(
@@ -72,7 +70,7 @@ public class DatasetRepository {
 
     /**
      * Aggiorna i valori di un dataset nel db
-     * @param dataset
+     * @param dataset da aggiornare nel db
      */
     public void updateDataset(Dataset dataset) {
         runner.executeAsync(
@@ -84,19 +82,23 @@ public class DatasetRepository {
     }
 
     /**
-     * Elimina un dataset dal database
+     * Elimina un dataset dal database in maniera asincrona
      * @param dataset
      */
     public void deleteDataset(Dataset dataset) {
-        basketDAO.deleteBaskets(dataset.getBaskets());
-        datasetDAO.deleteDataset(dataset);
+        runner.executeAsync(
+                () -> {
+                    basketDAO.deleteBaskets(dataset.getBaskets());
+                    datasetDAO.deleteDataset(dataset);
+                }
+        );
     }
 
     /**
      * Restituisce un dataset effettuando una query con l'indentificatore
      * del dataset
      * @param id identificatore del dataset
-     * @return dataset
+     * @return dataset con identificatore id
      */
     public Dataset getDataset(long id) {
         Dataset dataset = datasetDAO.getDataset(id);
@@ -108,7 +110,7 @@ public class DatasetRepository {
      * Restituisce un dataset effettuando una query con il nome del
      * dataset
      * @param label nome del dataset
-     * @return dataset
+     * @return dataset con nome label
      */
     public Dataset getDataset(String label) {
         Dataset dataset = datasetDAO.getDataset(label);
