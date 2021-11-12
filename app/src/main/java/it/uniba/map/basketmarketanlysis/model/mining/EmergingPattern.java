@@ -13,10 +13,16 @@ public class EmergingPattern extends FrequentPattern implements Serializable {
         this.growRate = growRate;
     }
 
+    /**
+     * @return tasso di crescita
+     */
     float getGrowRate() {
         return growRate;
     }
 
+    /**
+     * Codifica in stringa del pattern emergente
+     */
     @Override
     public String toString() {
         return super.toString() + "[" + growRate + "]";

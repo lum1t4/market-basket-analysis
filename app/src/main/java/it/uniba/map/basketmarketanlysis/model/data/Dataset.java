@@ -37,26 +37,46 @@ public class Dataset implements Iterable<Basket>, Serializable {
         this.label = label;
     }
 
+    /**
+     * @return identificatore del dataset
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * @param id nuovo identificatore
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * @return nome del dataset
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * Imposta il nome del dataset
+     * @param label
+     */
     public void setLabel(String label) {
         this.label = label;
     }
 
+    /**
+     * @return numero di esempi/basket presenti nel dataset
+     */
     public int getNumberOfExamples() {
         return baskets.size();
     }
 
+    /**
+     * Aggiunge un basket nel dataset
+     * @param basket da aggiungere
+     */
     public void addBasket(@NonNull Basket basket) {
         if (baskets == null) {
             baskets = new LinkedList<>();
@@ -65,15 +85,25 @@ public class Dataset implements Iterable<Basket>, Serializable {
         baskets.add(basket);
     }
 
+    /**
+     * @return lista dei basket
+     */
     public List<Basket> getBaskets() {
         return baskets;
     }
 
+    /**
+     * Imposta la lista dei basket
+     * @param baskets lista dei basket
+     */
     public void setBaskets(@NonNull List<Basket> baskets) {
         baskets.forEach(basket -> basket.setDataset(id));
         this.baskets = baskets;
     }
 
+    /**
+     * @return iteratore dei basket
+     */
     @NonNull
     @Override
     public Iterator<Basket> iterator() {
@@ -81,6 +111,9 @@ public class Dataset implements Iterable<Basket>, Serializable {
     }
 
 
+    /**
+     * @return rappresentazione in stringa del dataset
+     */
     @NonNull
     @Override
     public String toString() {

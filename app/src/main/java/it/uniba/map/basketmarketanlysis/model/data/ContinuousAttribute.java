@@ -30,7 +30,7 @@ public class ContinuousAttribute extends Attribute implements Iterable<Float> {
     }
 
     /**
-     * @return min minimo tra i valori dell'attributo
+     * @returns minimo tra i valori dell'attributo
      */
     public float getMin() {
         return min;
