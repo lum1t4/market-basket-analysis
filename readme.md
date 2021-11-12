@@ -1,6 +1,6 @@
 # MARKET-BASKET ANALYSIS
 Tale progetto di data mining si focalizza sul reperire informazioni riguardanti pattern frequenti ed
-emergenti dati due dataset: background e test.
+emergenti dati due dataset.
 Per poter estrapolare questi informazioni, l'utente ha il compito di inserire, attraverso un interfaccia d'input,
 i valori support e grow rate minimi, e successivamente di selezionare i due set di dati sui quali effettuare l'analisi,
 dataset Target e dataset Background, presenti nel database.
