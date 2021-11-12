@@ -28,7 +28,7 @@ public class TaskRunner {
      * il risultato ad una funzione consumer eseguita nel thread principale
      * @param supplier funzione che fornisce in output un dato di tip R da eseguire in baskground
      * @param consumer funzione che consuma in dato di tipo R
-     * @param <R> parametro di tipo generico per
+     * @param <R> tipo dell'oggetto da reperire e consumare
      */
     public <R> void executeAsync(Supplier<R> supplier, Consumer<R> consumer) {
         executor.execute(() -> {

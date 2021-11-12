@@ -59,15 +59,23 @@ public class Basket implements Serializable {
         this.id = id;
     }
 
-
+    /**
+     * @return outlook
+     */
     public String getOutlook() {
         return outlook;
     }
 
+    /**
+     * @param outlook nuovo outlook
+     */
     public void setOutlook(String outlook) {
         this.outlook = outlook;
     }
 
+    /**
+     * @return temperature
+     */
     public Float getTemperature() {
         return temperature;
     }
@@ -108,6 +116,12 @@ public class Basket implements Serializable {
         this.dataset = dataset;
     }
 
+    /**
+     * Dato un attributo restituisce il valore presente nel basket
+     * corrispondente ad esso
+     * @param attribute un attributo
+     * @return value valore corrispondente all'attributo
+     */
     public Object getValue(Attribute attribute) {
         String name = attribute.getName();
         switch (name) {
@@ -126,6 +140,10 @@ public class Basket implements Serializable {
         }
     }
 
+
+    /**
+     * @return stringa descrittiva del basket
+     */
     @NonNull
     @Override
     public String toString() {

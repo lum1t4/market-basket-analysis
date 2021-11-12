@@ -2,6 +2,8 @@ package it.uniba.map.basketmarketanlysis.model.data;
 
 import java.util.Iterator;
 
+
+
 public class ContinuousAttribute extends Attribute implements Iterable<Float> {
 
     private final float max;
@@ -35,8 +37,7 @@ public class ContinuousAttribute extends Attribute implements Iterable<Float> {
     }
 
     /**
-     * Restituisce un iteratore che discretizza l'intervallo tra minimo e massimo (escluso)
-     * @return
+     * @return un iteratore che discretizza l'intervallo tra minimo e massimo (escluso)
      */
     @Override
     public Iterator<Float> iterator() {

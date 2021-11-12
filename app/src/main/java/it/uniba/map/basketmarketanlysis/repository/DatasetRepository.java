@@ -138,7 +138,7 @@ public class DatasetRepository {
     /**
      * Completa i campi del dataset che non sono immediatamente
      * disponibili dalla rappresentazione nel database
-     * @param dataset
+     * @param dataset da completare
      */
     private void lazyLoadDataset(Dataset dataset) {
         dataset.setBaskets(basketDAO.getBasketsByDataset(dataset.getId()));
@@ -146,9 +146,8 @@ public class DatasetRepository {
     }
 
     /**
-     * Restituisce una lista di atttributi di un dataset
-     * @param dataset
-     * @return
+     * @param dataset da cui estrarre i valori
+     * @return lista degli attributi completi dei valori presenti nel dataset
      */
     private List<Attribute> getAttributes(Dataset dataset) {
         List<Attribute> attributes = new ArrayList<>();
