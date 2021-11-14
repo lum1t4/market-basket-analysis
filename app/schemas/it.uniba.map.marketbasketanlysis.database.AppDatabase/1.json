@@ -1,0 +1,96 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "03a67f9fda28b9265efcf003a342cf42",
+    "entities": [
+      {
+        "tableName": "baskets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`basket_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `outlook` TEXT, `temperature` REAL, `humidity` TEXT, `wind` TEXT, `play` TEXT, `dataset` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "basket_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outlook",
+            "columnName": "outlook",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "humidity",
+            "columnName": "humidity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wind",
+            "columnName": "wind",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "play",
+            "columnName": "play",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataset",
+            "columnName": "dataset",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "basket_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "datasets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dataset_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dataset_label` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "dataset_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "dataset_label",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dataset_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '03a67f9fda28b9265efcf003a342cf42')"
+    ]
+  }
+}
